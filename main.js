@@ -2,11 +2,12 @@ auto.waitFor()
 
 toast('执行脚本')
 
-var tagPrice = 4000
+var tagPrice = 7000
 var flag = 0
 var wait = 2000
+var loop=0
 
-function openPriceList() {
+function openPriceList(first) {
     try {
         let priceList = []
 
@@ -34,7 +35,11 @@ function openPriceList() {
             jumpDetail()
         }
         else {
-            init()
+            if(first){
+                init()
+            }
+            // init()
+            return false
         }
     } catch (e) {
         init()
@@ -42,9 +47,33 @@ function openPriceList() {
 }
 
 function init() {
+    let lock = false
     swipe(90, 882, 90, 1761, 300)
-    sleep(500)
-    openPriceList()
+    // sleep(500)
+    sleep(1500)
+    lock = openPriceList()
+    if(!loop){
+        init()
+        return
+    }
+
+    if(lock) return
+    console.log(lock)
+    swipe(90, 2033, 90, 200, 500)
+    lock = openPriceList()
+    if(lock) return
+    console.log(lock)
+    swipe(90, 2033, 90, 200, 500)
+    lock = openPriceList()
+    if(lock) return
+    console.log(lock)
+    console.log('asd')
+    swipe(90, 500, 90, 5000, 500)
+    // swipe(90, 500, 90, 2533, 500)
+
+    
+    init()
+    // openPriceList()
 }
 
 function jumpDetail() {
@@ -116,7 +145,7 @@ function order() {
     }
 }
 
-openPriceList()
+openPriceList(true)
 // order()
 
 console.log('结束')
